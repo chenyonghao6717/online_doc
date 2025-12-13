@@ -1,6 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { SearchInput } from "./search-input";
+import { Button } from "@/components/ui/button";
+import { authClient } from "@/lib/auth-client";
 
 export const Navbar = () => {
   return (
@@ -12,6 +16,9 @@ export const Navbar = () => {
         </div>
       </Link>
       <SearchInput />
+      <Button variant="outline" onClick={() => authClient.signOut()}>
+        Sign out
+      </Button>
       <div />
     </nav>
   );
