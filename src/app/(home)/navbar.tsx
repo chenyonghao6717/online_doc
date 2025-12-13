@@ -5,8 +5,22 @@ import Image from "next/image";
 import { SearchInput } from "./search-input";
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
+import { useState } from "react";
+import FullScreenSpinner from "@/components/spinners/full-screen-spinner";
 
 export const Navbar = () => {
+  const [loading, setIsLoading] = useState(false);
+  const signOut = async () => {
+    try {
+      setIsLoading(true);
+      await authClient.signOut();
+    } catch (error) {
+      console.log("Sign out failed:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <nav className="flex items-center justify-between h-full w-full">
       <Link href="/">
@@ -16,9 +30,10 @@ export const Navbar = () => {
         </div>
       </Link>
       <SearchInput />
-      <Button variant="outline" onClick={() => authClient.signOut()}>
+      <Button variant="outline" onClick={signOut} disabled={loading}>
         Sign out
       </Button>
+      {loading && <FullScreenSpinner />}
       <div />
     </nav>
   );
