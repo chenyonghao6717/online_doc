@@ -51,8 +51,8 @@ export const Editor = () => {
     onContentError: updateEditor,
     editorProps: {
       attributes: {
-        style: `padding-left: ${defaultDocContentPadding}px; padding-right: ${defaultDocContentPadding}px;`,
-        class: `focus-outline-none bg-white border print:border-0 border-[#C7C7C7] flex flex-col min-h-[${docPaperHeight}px] w-[${docPaperWidth}px] pt-10 pr-14 pd-10 cursor-text`,
+        style: `padding-left: ${defaultDocContentPadding}px; padding-right: ${defaultDocContentPadding}px; min-height: ${docPaperHeight}px; min-width: ${docPaperWidth}px`,
+        class: `focus:outline-none bg-white border print:border-0 border-[#C7C7C7] flex flex-col pt-10 pr-14 pd-10 cursor-text`,
       },
     },
     extensions: [
@@ -60,7 +60,6 @@ export const Editor = () => {
       FontFamily,
       FontSizeExtension,
       Highlight.configure({ multicolor: true }),
-      Image,
       ImageResize,
       LineHeightExtension,
       Link.configure({

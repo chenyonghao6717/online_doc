@@ -9,9 +9,31 @@ import {
 } from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
 import { templates } from "@/constants/templates";
+import { useRouter } from "next/navigation";
+import { createDocument } from "@/lib/api/document";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
+import FullScreenSpinner from "@/components/spinners/full-screen-spinner";
 
 export const TemplatesGallery = () => {
-  let isCreating = false;
+  const router = useRouter();
+  const { isPending, mutateAsync } = useMutation({
+    mutationFn: createDocument,
+    onSuccess: () => {
+      toast.success("Created successfully!");
+    },
+    onError: () => {
+      toast.error("Created failed!");
+    },
+  });
+
+  const onTemplateClick = async (title: string, initContent: string) => {
+    const res = await mutateAsync({
+      title: title,
+      initContent: initContent,
+    });
+    router.push(`/documents/${res.id}`);
+  };
 
   return (
     <div className="bg-[#F1F3F4] ">
@@ -26,18 +48,17 @@ export const TemplatesGallery = () => {
                   className="
                     basis-1/2 sm:basis-1/3 md:basis-1/4
                     lg:basis-1/5 xl:basis-1/6
-                    2xl:basis-[14.285714%] pl-4
-                "
+                    2xl:basis-[14.285714%] pl-4"
                 >
                   <div
                     className={cn(
                       "aspect-[3/4] flex flex-col gap-y-2.5",
-                      isCreating && "pointer-events-none opacity-50"
+                      isPending && "pointer-events-none opacity-50"
                     )}
                   >
                     <button
-                      disabled={isCreating}
-                      onClick={() => {}}
+                      disabled={isPending}
+                      onClick={() => onTemplateClick(template.id, "")}
                       style={{
                         backgroundImage: `url(${template.imageUrl})`,
                         backgroundSize: "cover",

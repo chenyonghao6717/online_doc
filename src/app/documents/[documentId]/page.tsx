@@ -15,7 +15,7 @@ const DocumentIdPage = async ({ params }: DocumentIdPageProps) => {
         <Navbar />
         <Toolbar />
       </div>
-      <div className="mt-[114px] print:pt-0 ">
+      <div className="mt-[114px] print:pt-0">
         <Editor />
       </div>
     </div>
