@@ -20,7 +20,7 @@ export const createDocument = async (body: {
   return (await res.json()) as { id: string };
 };
 
-interface SearchDocumentsResponse {
+export interface SearchDocumentsResponse {
   total: number;
   page: number;
   limit: number;
@@ -44,8 +44,22 @@ export const searchDocuments = async (queries: {
   });
 
   if (!res.ok) {
-    throw new Error("Search documents failed");
+    throw new Error("Failded to search documents");
   }
 
   return (await res.json()) as SearchDocumentsResponse;
+};
+
+export const deleteDocument = async (id: string) => {
+  const url = `/api/documents/${id}`;
+  const res = await fetch(url, {
+    method: "delete",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to delete document");
+  }
 };

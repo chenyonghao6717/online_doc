@@ -16,6 +16,7 @@ import { toast } from "sonner";
 
 export const TemplatesGallery = () => {
   const router = useRouter();
+
   const { isPending, mutateAsync } = useMutation({
     mutationFn: createDocument,
     onSuccess: () => {

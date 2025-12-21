@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/db";
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { auth } from "@/lib/auth";
+import { checkAndGetSession } from "@/lib/auth";
 import { headers } from "next/headers";
 
 const createDocumentRequestSchema = z.object({
@@ -10,13 +10,7 @@ const createDocumentRequestSchema = z.object({
 });
 
 export async function POST(req: Request) {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-
-  if (!session) {
-    return NextResponse.json(undefined, { status: 401 });
-  }
+  const session = await checkAndGetSession();
 
   const body = await req.json();
   const parsed = createDocumentRequestSchema.safeParse(body);
@@ -49,13 +43,7 @@ const searchDocumentsRequestSchema = z.object({
 });
 
 export async function GET(req: Request) {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-
-  if (!session) {
-    return NextResponse.json("Unauthorized", { status: 401 });
-  }
+  const session = await checkAndGetSession();
 
   const { searchParams } = new URL(req.url);
 
