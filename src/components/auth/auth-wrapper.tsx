@@ -10,12 +10,12 @@ export default function Auth({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
 
+  const publicPaths = ["/sign-in", "/sign-up"];
+
   useEffect(() => {
     if (isPending) {
       return;
     }
-
-    const publicPaths = ["/sign-in", "/sign-up"];
 
     if (session && publicPaths.includes(pathname)) {
       router.replace("/");
@@ -26,10 +26,10 @@ export default function Auth({ children }: { children: React.ReactNode }) {
     }
   }, [session, isPending, pathname, router]);
 
-  return (
-    <>
-      {children}
-      {isPending && <FullScreenSpinner />}
-    </>
-  );
+  const isPrivatePath = !publicPaths.includes(pathname);
+  if (isPending || (isPrivatePath && !session)) {
+    return <FullScreenSpinner />;
+  } else {
+    return children;
+  }
 }

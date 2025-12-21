@@ -13,7 +13,6 @@ import { useRouter } from "next/navigation";
 import { createDocument } from "@/lib/api/document";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
-import FullScreenSpinner from "@/components/spinners/full-screen-spinner";
 
 export const TemplatesGallery = () => {
   const router = useRouter();
@@ -58,7 +57,7 @@ export const TemplatesGallery = () => {
                   >
                     <button
                       disabled={isPending}
-                      onClick={() => onTemplateClick(template.id, "")}
+                      onClick={() => onTemplateClick(template.label, "")}
                       style={{
                         backgroundImage: `url(${template.imageUrl})`,
                         backgroundSize: "cover",

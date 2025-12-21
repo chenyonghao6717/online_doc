@@ -1,3 +1,4 @@
+import DocumentsTable from "./documents-table";
 import { Navbar } from "./navbar";
 import { TemplatesGallery } from "./templates-gallery";
 
@@ -9,6 +10,7 @@ const Home = () => {
       </div>
       <div className="mt-16">
         <TemplatesGallery />
+        <DocumentsTable  />
       </div>
     </div>
   );
