@@ -16,12 +16,14 @@ datasource db {
 }
 
 model Document {
-  id             String  @id @default(uuid())
+  id             String   @id @default(uuid())
   title          String
   initialContent String?
   ownerId        String
   roomId         String?
   organizationId String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
   @@index([ownerId])
   @@index([organizationId])
