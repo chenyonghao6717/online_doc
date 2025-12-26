@@ -8,8 +8,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { searchDocuments, SearchDocumentsResponse } from "@/lib/api/document";
-import { useMutation } from "@tanstack/react-query";
+import { searchDocuments } from "@/lib/api/document";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { LoaderIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -17,23 +17,21 @@ import { isEmpty } from "lodash-es";
 import DocumentRow from "./document-row";
 
 const DocumentsTable = () => {
-  const { isPending, mutateAsync } = useMutation({
-    mutationFn: searchDocuments,
-    onError: () => {
-      toast.error("Load documents failed!");
+  const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery({
+    queryKey: ["home-page", "documents-table"],
+    queryFn: async ({ pageParam }: { pageParam: number }) => {
+      return await searchDocuments({
+        limit: 10,
+        page: pageParam,
+      });
     },
+    getNextPageParam: (lastPage) => {
+      const { page, limit, total } = lastPage;
+      return page * limit < total ? page + 1 : undefined;
+    },
+    initialPageParam: 1,
   });
-
-  const [searchDocumentsRes, setSearchDocumentsRes] = useState<
-    SearchDocumentsResponse | undefined
-  >();
-
-  useEffect(() => {
-    (async () => {
-      const res = await mutateAsync({ limit: 10, page: 1 });
-      setSearchDocumentsRes(res);
-    })();
-  }, []);
+  const documents = data?.pages.flatMap((page) => page.documents) ?? [];
 
   const loader = (
     <div className="flex justify-center items-center h-24">
@@ -67,7 +65,7 @@ const DocumentsTable = () => {
 
   const tBody = (
     <TableBody>
-      {searchDocumentsRes?.documents.map((document) => (
+      {documents.map((document) => (
         <DocumentRow key={document.id} document={document} />
       ))}
     </TableBody>
@@ -76,13 +74,13 @@ const DocumentsTable = () => {
   const table = (
     <Table>
       {tHeader}
-      {isEmpty(searchDocumentsRes?.documents) ? emptyTBody : tBody}
+      {isEmpty(documents) ? emptyTBody : tBody}
     </Table>
   );
 
   return (
     <div className="max-w-screen-xl mx-auto px-16 py-6 flex flex-col gap-5">
-      {isPending ? loader : table}
+      {isLoading ? loader : table}
     </div>
   );
 };

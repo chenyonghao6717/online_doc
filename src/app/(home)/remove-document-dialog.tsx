@@ -11,7 +11,7 @@ import {
 import { Document } from "@/generated/prisma/browser";
 import { deleteDocument } from "@/lib/api/document";
 import { AlertDialogTitle } from "@radix-ui/react-alert-dialog";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 interface RemoveDocumentDialogProps {
@@ -23,9 +23,14 @@ const RemoveDocumentDialog = ({
   document,
   children,
 }: RemoveDocumentDialogProps) => {
+  const queryClient = useQueryClient();
+
   const { isPending, mutateAsync } = useMutation({
     mutationFn: deleteDocument,
     onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["home-page", "documents-table"],
+      });
       toast.error("Document has been deleted!");
     },
     onError: (e) => {

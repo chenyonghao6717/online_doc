@@ -11,15 +11,19 @@ import { cn } from "@/lib/utils";
 import { templates } from "@/constants/templates";
 import { useRouter } from "next/navigation";
 import { createDocument } from "@/lib/api/document";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
 export const TemplatesGallery = () => {
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const { isPending, mutateAsync } = useMutation({
     mutationFn: createDocument,
     onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["home-page", "documents-table"],
+      });
       toast.success("Created successfully!");
     },
     onError: () => {
