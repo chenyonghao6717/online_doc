@@ -53,7 +53,7 @@ export const searchDocuments = async (queries: {
 export const deleteDocument = async (id: string) => {
   const url = `/api/documents/${id}`;
   const res = await fetch(url, {
-    method: "delete",
+    method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
@@ -61,5 +61,24 @@ export const deleteDocument = async (id: string) => {
 
   if (!res.ok) {
     throw new Error("Failed to delete document");
+  }
+};
+
+export const updateDocumentTitle = async ({
+  id,
+  title,
+}: {
+  id: string;
+  title: string;
+}) => {
+  const url = `/api/documents/${id}`;
+  const res = await fetch(url, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ title: title }),
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to update document");
   }
 };

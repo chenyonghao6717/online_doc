@@ -4,6 +4,7 @@ import {
   Building2Icon,
   CircleUserIcon,
   ExternalLinkIcon,
+  FilePenIcon,
   MoreVertical,
   TrashIcon,
 } from "lucide-react";
@@ -17,6 +18,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import RemoveDocumentDialog from "@/app/(home)/remove-document-dialog";
+import RenameDocumentDialog from "./rename-document-dialog";
 
 interface DocumentMenuProps {
   document: Document;
@@ -26,6 +28,19 @@ interface DocumentMenuProps {
 const DocumentMenu = ({ document, onNewTab }: DocumentMenuProps) => {
   const content = (
     <DropdownMenuContent>
+      <RenameDocumentDialog document={document}>
+        <DropdownMenuItem
+          onSelect={(e) => {
+            e.preventDefault();
+          }}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          <FilePenIcon className="size-4 mr-2" />
+          Rename
+        </DropdownMenuItem>
+      </RenameDocumentDialog>
       <RemoveDocumentDialog document={document}>
         <DropdownMenuItem
           onSelect={(e) => {

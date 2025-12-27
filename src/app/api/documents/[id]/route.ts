@@ -38,13 +38,13 @@ export async function GET(
   return NextResponse.json(document);
 }
 
-interface DeleteDocumentParams {
+interface DocumentParams {
   id: string;
 }
 
 export async function DELETE(
   req: Request,
-  { params }: { params: DeleteDocumentParams }
+  { params }: { params: DocumentParams }
 ) {
   const document = await getDocument(params.id);
   await prisma.document.delete({
@@ -53,4 +53,21 @@ export async function DELETE(
     },
   });
   return new NextResponse(undefined, { status: 204 });
+}
+
+export async function PATCH(
+  req: Request,
+  { params }: { params: DocumentParams }
+) {
+  const document = await getDocument(params.id);
+  const body = await req.json();
+  await prisma.document.update({
+    data: {
+      title: body.title,
+    },
+    where: {
+      id: document.id,
+    },
+  });
+  return new NextResponse(undefined, { status: 201 });
 }

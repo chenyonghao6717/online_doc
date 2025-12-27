@@ -31,7 +31,7 @@ const RemoveDocumentDialog = ({
       queryClient.invalidateQueries({
         queryKey: ["home-page", "documents-table"],
       });
-      toast.error("Document has been deleted!");
+      toast.success("Document has been deleted!");
     },
     onError: (e) => {
       toast.error(e.message);
