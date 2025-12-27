@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { isEmpty } from "lodash-es";
 import DocumentRow from "./document-row";
+import { Button } from "@/components/ui/button";
 
 const DocumentsTable = () => {
   const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery({
@@ -32,6 +33,7 @@ const DocumentsTable = () => {
     initialPageParam: 1,
   });
   const documents = data?.pages.flatMap((page) => page.documents) ?? [];
+  console.log(hasNextPage);
 
   const loader = (
     <div className="flex justify-center items-center h-24">
@@ -72,10 +74,22 @@ const DocumentsTable = () => {
   );
 
   const table = (
-    <Table>
-      {tHeader}
-      {isEmpty(documents) ? emptyTBody : tBody}
-    </Table>
+    <>
+      <Table>
+        {tHeader}
+        {isEmpty(documents) ? emptyTBody : tBody}
+      </Table>
+      <div className="flex items-center justify-center">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => fetchNextPage()}
+          disabled={!hasNextPage}
+        >
+          {hasNextPage ? "Load more" : "End of results"}
+        </Button>
+      </div>
+    </>
   );
 
   return (

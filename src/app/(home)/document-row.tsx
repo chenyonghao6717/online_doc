@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import RemoveDocumentDialog from "@/app/(home)/remove-document-dialog";
 import RenameDocumentDialog from "./rename-document-dialog";
+import { useRouter } from "next/navigation";
 
 interface DocumentMenuProps {
   document: Document;
@@ -78,12 +79,21 @@ interface DocumentRowProps {
 }
 
 const DocumentRow = ({ document }: DocumentRowProps) => {
+  const router = useRouter();
+
   const onNewTabClick = (id: string) => {
     window.open(`/documents/${id}`, "_blank");
   };
 
+  const onRowClick = (id: string) => {
+    router.push(`/documents/${id}`);
+  };
+
   return (
-    <TableRow className="cursor-pointer ">
+    <TableRow
+      className="cursor-pointer"
+      onClick={() => onRowClick(document.id)}
+    >
       <TableCell className="w-[50px]">
         <SiGoogledocs className="size-6 fill-blue-500" />
       </TableCell>
