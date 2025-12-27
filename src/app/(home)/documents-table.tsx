@@ -11,19 +11,18 @@ import {
 import { searchDocuments } from "@/lib/api/document";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { LoaderIcon } from "lucide-react";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
 import { isEmpty } from "lodash-es";
 import DocumentRow from "./document-row";
 import { Button } from "@/components/ui/button";
 
-const DocumentsTable = () => {
+const DocumentsTable = ({ search }: { search: string }) => {
   const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery({
-    queryKey: ["home-page", "documents-table"],
+    queryKey: ["home-page", "documents-table", search],
     queryFn: async ({ pageParam }: { pageParam: number }) => {
       return await searchDocuments({
         limit: 10,
         page: pageParam,
+        search,
       });
     },
     getNextPageParam: (lastPage) => {
@@ -33,7 +32,6 @@ const DocumentsTable = () => {
     initialPageParam: 1,
   });
   const documents = data?.pages.flatMap((page) => page.documents) ?? [];
-  console.log(hasNextPage);
 
   const loader = (
     <div className="flex justify-center items-center h-24">
