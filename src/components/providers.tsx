@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/sonner";
 import AuthWrapper from "@/components/auth/auth-wrapper";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
-import FullScreenSpinner from "./spinners/full-screen-spinner";
+import FullScreenSpinner from "@/components/spinners/full-screen-spinner";
 
 const queryClient = new QueryClient();
 

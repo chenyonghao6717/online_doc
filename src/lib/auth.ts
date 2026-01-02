@@ -3,8 +3,8 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "@/lib/db";
 import { nextCookies } from "better-auth/next-js";
 import { headers } from "next/headers";
-import { NextResponse } from "next/server";
 import { organization } from "better-auth/plugins";
+import { redirect, RedirectType } from "next/navigation";
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
@@ -22,7 +22,7 @@ export const checkAndGetSession = async () => {
     headers: await headers(),
   });
   if (!session) {
-    throw new NextResponse(undefined, { status: 401 });
+    redirect("/sign-up", RedirectType.replace);
   }
   return session;
 };

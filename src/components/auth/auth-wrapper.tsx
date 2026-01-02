@@ -25,7 +25,7 @@ export default function Auth({ children }: { children: React.ReactNode }) {
     if (!session && !publicPaths.has(pathname)) {
       router.replace("/sign-in");
     }
-  }, [session, pathname, router]);
+  }, [session, pathname, router, isPending]);
 
   useEffect(() => {
     if (isPending) {
