@@ -2,7 +2,6 @@ import { prisma } from "@/lib/db";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { checkAndGetSession } from "@/lib/auth";
-import { headers } from "next/headers";
 
 const createDocumentRequestSchema = z.object({
   title: z.string().min(1).max(200).optional(),

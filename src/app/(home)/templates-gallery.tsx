@@ -10,7 +10,7 @@ import {
 import { cn } from "@/lib/utils";
 import { templates } from "@/constants/templates";
 import { useRouter } from "next/navigation";
-import { createDocument } from "@/lib/api/document";
+import { createDocument } from "@/lib/api/documents";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 

@@ -6,7 +6,7 @@ export const createDocument = async (body: {
   initContent?: string;
 }) => {
   const res = await fetch("/api/documents", {
-    method: "post",
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
@@ -37,7 +37,7 @@ export const searchDocuments = async (queries: {
     query: queries,
   });
   const res = await fetch(url, {
-    method: "get",
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
     },

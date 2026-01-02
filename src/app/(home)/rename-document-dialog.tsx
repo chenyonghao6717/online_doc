@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Document } from "@/generated/prisma/browser";
-import { updateDocumentTitle } from "@/lib/api/document";
+import { updateDocumentTitle } from "@/lib/api/documents";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "sonner";

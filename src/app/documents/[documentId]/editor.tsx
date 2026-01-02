@@ -1,7 +1,6 @@
 "use client";
 
 import FontFamily from "@tiptap/extension-font-family";
-import Image from "@tiptap/extension-image";
 import ImageResize from "tiptap-extension-resize-image";
 import Link from "@tiptap/extension-link";
 import Table from "@tiptap/extension-table";

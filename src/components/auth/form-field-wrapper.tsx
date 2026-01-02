@@ -2,6 +2,7 @@ import {
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -12,6 +13,7 @@ interface FormFieldWrapperProps<T extends FieldValues> {
   type: string;
   placeholder: string;
   control: Control<T>;
+  label?: string;
 }
 
 export const FormFieldWrapper = <T extends FieldValues>({
@@ -19,6 +21,7 @@ export const FormFieldWrapper = <T extends FieldValues>({
   type,
   placeholder,
   control,
+  label,
 }: FormFieldWrapperProps<T>) => {
   return (
     <FormField
@@ -26,8 +29,9 @@ export const FormFieldWrapper = <T extends FieldValues>({
       control={control}
       render={({ field }) => (
         <FormItem>
+          {label && <FormLabel>{label}</FormLabel>}
           <FormControl>
-            <Input {...field} type={type} placeholder={placeholder} />
+            <Input id={name} type={type} placeholder={placeholder} {...field} />
           </FormControl>
           <FormMessage />
         </FormItem>

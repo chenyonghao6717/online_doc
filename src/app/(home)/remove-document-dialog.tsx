@@ -6,11 +6,11 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
+  AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Document } from "@/generated/prisma/browser";
-import { deleteDocument } from "@/lib/api/document";
-import { AlertDialogTitle } from "@radix-ui/react-alert-dialog";
+import { deleteDocument } from "@/lib/api/documents";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 

@@ -3,32 +3,42 @@
 import { authClient } from "@/lib/auth-client";
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect } from "react";
-import FullScreenSpinner from "@/components/spinners/full-screen-spinner";
+import { useAppStore } from "@/components/stores/app-store";
+
+const publicPaths = new Set(["/sign-in", "/sign-up"]);
 
 export default function Auth({ children }: { children: React.ReactNode }) {
   const { data: session, isPending } = authClient.useSession();
   const router = useRouter();
   const pathname = usePathname();
-
-  const publicPaths = ["/sign-in", "/sign-up"];
+  const { startLoading, stopLoading } = useAppStore();
 
   useEffect(() => {
     if (isPending) {
       return;
     }
 
-    if (session && publicPaths.includes(pathname)) {
+    if (session && publicPaths.has(pathname)) {
       router.replace("/");
     }
 
-    if (!session && !publicPaths.includes(pathname)) {
+    if (!session && !publicPaths.has(pathname)) {
       router.replace("/sign-in");
     }
-  }, [session, isPending, pathname, router]);
+  }, [session, pathname, router]);
 
-  const isPrivatePath = !publicPaths.includes(pathname);
+  useEffect(() => {
+    if (isPending) {
+      startLoading();
+    } else {
+      stopLoading();
+    }
+  }, [isPending]);
+
+  const isPrivatePath = !publicPaths.has(pathname);
+
   if (isPending || (isPrivatePath && !session)) {
-    return <FullScreenSpinner />;
+    return null;
   } else {
     return children;
   }

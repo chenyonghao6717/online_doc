@@ -4,6 +4,7 @@ import { prisma } from "@/lib/db";
 import { nextCookies } from "better-auth/next-js";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
+import { organization } from "better-auth/plugins";
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
@@ -12,7 +13,7 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
-  plugins: [nextCookies()], // make sure this is the last plugin in the array
+  plugins: [organization(), nextCookies()], // make sure nextCookies() is the last plugin in the array
   session: { expiresIn: 60 * 60 },
 });
 

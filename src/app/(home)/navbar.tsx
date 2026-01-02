@@ -5,19 +5,17 @@ import Image from "next/image";
 import { SearchInput } from "./search-input";
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
-import { useState } from "react";
-import FullScreenSpinner from "@/components/spinners/full-screen-spinner";
+import OrganizationSwitcher from "@/components/organization/organization-switcher";
+import { useAppStore } from "@/components/stores/app-store";
 
 export const Navbar = () => {
-  const [loading, setIsLoading] = useState(false);
+  const { startLoading, stopLoading, loadingCount } = useAppStore();
   const signOut = async () => {
+    startLoading();
     try {
-      setIsLoading(true);
       await authClient.signOut();
-    } catch (error) {
-      console.log("Sign out failed:", error);
     } finally {
-      setIsLoading(false);
+      stopLoading();
     }
   };
 
@@ -30,11 +28,12 @@ export const Navbar = () => {
         </div>
       </Link>
       <SearchInput />
-      <Button variant="outline" onClick={signOut} disabled={loading}>
-        Sign out
-      </Button>
-      {loading && <FullScreenSpinner />}
-      <div />
+      <div className="flex gap-x-2">
+        <OrganizationSwitcher />
+        <Button variant="outline" onClick={signOut} disabled={loadingCount > 0}>
+          Sign out
+        </Button>
+      </div>
     </nav>
   );
 };

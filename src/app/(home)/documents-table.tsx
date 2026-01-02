@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { searchDocuments } from "@/lib/api/document";
+import { searchDocuments } from "@/lib/api/documents";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { LoaderIcon } from "lucide-react";
 import { isEmpty } from "lodash-es";

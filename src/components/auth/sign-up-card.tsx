@@ -19,12 +19,10 @@ import { registerSchema, RegisterSchemaType } from "@/schemas/auth-schemas";
 import DottedSeparator from "@/components/separators/dotted-separator";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import FullScreenSpinner from "../spinners/full-screen-spinner";
+import { useAppStore } from "@/components/stores/app-store";
 
 const SignUpCard = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const { startLoading, stopLoading } = useAppStore();
 
   const form = useForm<RegisterSchemaType>({
     resolver: zodResolver(registerSchema),
@@ -36,17 +34,19 @@ const SignUpCard = () => {
   });
 
   const onSubmit = async (values: RegisterSchemaType) => {
-    setIsLoading(true);
-    const { error } = await authClient.signUp.email({
-      email: values.email,
-      password: values.password,
-      name: values.name,
-      callbackURL: "/",
-    });
-    setIsLoading(false);
-
-    if (error) {
-      toast.error(error.message);
+    startLoading();
+    try {
+      const { error } = await authClient.signUp.email({
+        email: values.email,
+        password: values.password,
+        name: values.name,
+        callbackURL: "/",
+      });
+      if (error) {
+        toast.error(error.message);
+      }
+    } finally {
+      stopLoading();
     }
   };
 
@@ -135,7 +135,6 @@ const SignUpCard = () => {
       </CardContent>
       {separator}
       {alreadyHasAccount}
-      {isLoading && <FullScreenSpinner />}
     </Card>
   );
 };
