@@ -3,7 +3,7 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "@/lib/db";
 import { nextCookies } from "better-auth/next-js";
 import { headers } from "next/headers";
-import { organization } from "better-auth/plugins";
+import { organization, admin } from "better-auth/plugins";
 import { redirect, RedirectType } from "next/navigation";
 
 export const auth = betterAuth({
@@ -13,7 +13,7 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
-  plugins: [organization(), nextCookies()], // make sure nextCookies() is the last plugin in the array
+  plugins: [organization(), admin(), nextCookies()], // make sure nextCookies() is the last plugin in the array
   session: { expiresIn: 60 * 60 },
 });
 
