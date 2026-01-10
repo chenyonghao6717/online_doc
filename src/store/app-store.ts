@@ -1,7 +1,7 @@
 import {
   createGlobalLoadingSlice,
   GlobalLoadingSlice,
-} from "@/components/stores/global-loading-slice";
+} from "@/store/global-loading-slice";
 import { create } from "zustand";
 
 type AppStore = GlobalLoadingSlice;

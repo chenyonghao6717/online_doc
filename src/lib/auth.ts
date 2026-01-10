@@ -4,7 +4,7 @@ import { prisma } from "@/lib/db";
 import { nextCookies } from "better-auth/next-js";
 import { headers } from "next/headers";
 import { organization, admin } from "better-auth/plugins";
-import { redirect, RedirectType } from "next/navigation";
+import { ApiError } from "@/lib/api-wrapper";
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
@@ -22,7 +22,7 @@ export const checkAndGetSession = async () => {
     headers: await headers(),
   });
   if (!session) {
-    redirect("/sign-up", RedirectType.replace);
+    throw new ApiError("", 401);
   }
   return session;
 };

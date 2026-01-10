@@ -27,7 +27,7 @@ const createOrganizationSchema = z.object({
 });
 
 export async function POST(req: Request) {
-  const session = await checkAndGetSession();
+  await checkAndGetSession();
 
   const body = await req.json();
   const parsed = createOrganizationSchema.safeParse(body);

@@ -10,7 +10,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
-import { useAppStore } from "@/components/stores/app-store";
+import { useAppStore } from "@/store/app-store";
 import { toast } from "sonner";
 import { FormFieldWrapper } from "@/components/auth/form-field-wrapper";
 import { Button } from "@/components/ui/button";

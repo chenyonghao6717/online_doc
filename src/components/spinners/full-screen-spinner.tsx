@@ -1,5 +1,5 @@
 import { LoaderIcon } from "lucide-react";
-import { useAppStore } from "@/components/stores/app-store";
+import { useAppStore } from "@/store/app-store";
 
 const FullScreenSpinner = () => {
   const { loadingCount } = useAppStore();

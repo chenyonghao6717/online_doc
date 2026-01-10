@@ -3,7 +3,7 @@
 import { authClient } from "@/lib/auth-client";
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect } from "react";
-import { useAppStore } from "@/components/stores/app-store";
+import { useAppStore } from "@/store/app-store";
 
 const publicPaths = new Set(["/sign-in", "/sign-up"]);
 

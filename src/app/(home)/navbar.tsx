@@ -6,7 +6,7 @@ import { SearchInput } from "./search-input";
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
 import OrganizationSwitcher from "@/components/organization/organization-switcher";
-import { useAppStore } from "@/components/stores/app-store";
+import { useAppStore } from "@/store/app-store";
 
 export const Navbar = () => {
   const { startLoading, stopLoading, loadingCount } = useAppStore();

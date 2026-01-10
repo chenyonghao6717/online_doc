@@ -11,7 +11,7 @@ import { loginSchema, LoginSchemaType } from "@/schemas/auth-schemas";
 import DottedSeparator from "@/components/separators/dotted-separator";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
-import { useAppStore } from "@/components/stores/app-store";
+import { useAppStore } from "@/store/app-store";
 
 const SignInCard = () => {
   const { startLoading, stopLoading } = useAppStore();
