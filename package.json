@@ -6,5 +6,14 @@
   ],
   "devDependencies": {
     "typescript": "^5.8.3"
+  },
+  "scripts": {
+    "build": "pnpm -r build",
+    "dev": "pnpm -r --parallel --filter ./apps/frontend --filter ./apps/backend dev"
+  },
+  "dependencies": {
+    "@online-document/contracts": "workspace:^",
+    "@online-document/prisma": "link:packages/shared/prisma",
+    "contracts": "link:packages/shared/contracts"
   }
 }

@@ -1,0 +1,36 @@
+{
+  "name": "@online-document/contracts",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@online-document/prisma": "workspace:^",
+    "zod": "^4.3.5"
+  },
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "default": "./dist/src/index.js",
+      "types": "./dist/src/index.d.ts"
+    },
+    "./auth": {
+      "default": "./dist/src/auth.js",
+      "types": "./dist/src/auth.d.ts"
+    },
+    "./document": {
+      "default": "./dist/src/document.js",
+      "types": "./dist/src/document.d.ts"
+    },
+    "./member": {
+      "default": "./dist/src/member.js",
+      "types": "./dist/src/member.d.ts"
+    }
+  }
+}

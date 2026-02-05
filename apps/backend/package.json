@@ -1,5 +1,5 @@
 {
-  "name": "backend",
+  "name": "@online-dcoument/backend",
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",
@@ -9,9 +9,9 @@
   "dependencies": {
     "@hono/node-server": "^1.19.8",
     "@hono/zod-validator": "^0.7.6",
+    "@online-document/contracts": "workspace:^",
+    "@online-document/prisma": "workspace:^",
     "@prisma/adapter-pg": "^7.3.0",
-    "@prisma/client": "^7.3.0",
-    "@repo/contracts": "workspace:*",
     "@types/pg": "^8.16.0",
     "better-auth": "^1.4.17",
     "dotenv": "^17.2.3",
@@ -21,6 +21,11 @@
   },
   "devDependencies": {
     "@types/node": "^20.19.30",
+    "module-alias": "^2.2.3",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.2.0",
+    "tsup": "^8.5.1",
     "tsx": "^4.7.1",
     "typescript": "^5.8.3"
   }

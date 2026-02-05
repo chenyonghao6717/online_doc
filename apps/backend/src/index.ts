@@ -1,7 +1,10 @@
+import "module-alias/register";
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
-import auth, { Session } from "@/lib/auth";
+import authApp, { Session } from "@/lib/auth";
+import documentApp from "@/controllers/document-controller";
 import { HTTPException } from "hono/http-exception";
+import { cors } from "hono/cors";
 
 type Variables = {
   session: Session;
@@ -22,7 +25,19 @@ app.onError((err, c) => {
   );
 });
 
-app.route("/api/auth", auth);
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    allowHeaders: ["Content-Type", "Authorization"],
+    allowMethods: ["POST", "GET", "OPTIONS"],
+    exposeHeaders: ["Content-Length"],
+    maxAge: 600,
+    credentials: true,
+  }),
+);
+
+app.route("/api/auth", authApp);
+app.route("/api/documents", documentApp);
 
 serve(
   {

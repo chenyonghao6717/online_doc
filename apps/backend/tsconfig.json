@@ -1,17 +1,19 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "baseUrl": ".",
+    "paths": { "@/*": ["src/*"] },
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "types": ["node"],
     "strict": true,
     "skipLibCheck": true,
-    "esModuleInterop": true,
-    "types": ["node"],
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"],
-      "@repo/contracts": ["../../shared/contracts/src/index.ts"]
-    }
+    "composite": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "importHelpers": true,
+    "outDir": "dist",
+    "esModuleInterop": true
   },
-  "include": ["src/**/*"]
+  "include": ["src"]
 }

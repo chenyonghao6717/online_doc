@@ -6,7 +6,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Control, FieldValues, Path } from "react-hook-form";
+import { type Control, type FieldValues, type Path } from "react-hook-form";
 
 interface FormFieldWrapperProps<T extends FieldValues> {
   name: Path<T>;

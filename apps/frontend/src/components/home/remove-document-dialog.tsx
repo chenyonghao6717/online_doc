@@ -1,0 +1,92 @@
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { type Document } from "@online-document/prisma/browser";
+import { deleteDocument } from "@/lib/document-apis";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
+
+interface RemoveDocumentDialogProps {
+  document: Document;
+  children: React.ReactNode;
+}
+
+const RemoveDocumentDialog = ({
+  document,
+  children,
+}: RemoveDocumentDialogProps) => {
+  const queryClient = useQueryClient();
+
+  const { isPending, mutateAsync } = useMutation({
+    mutationFn: deleteDocument,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["home-page", "documents-table"],
+      });
+      toast.success("Document has been deleted!");
+    },
+    onError: (e) => {
+      toast.error(e.message);
+    },
+  });
+
+  const header = (
+    <AlertDialogHeader>
+      <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+      <AlertDialogDescription>
+        This action cannot be undone. This will permanently delete your
+        document.
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+  );
+
+  const footer = (
+    <AlertDialogFooter>
+      <AlertDialogCancel
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        disabled={isPending}
+      >
+        Cancel
+      </AlertDialogCancel>
+      <AlertDialogAction
+        disabled={isPending}
+        onClick={async (e) => {
+          e.stopPropagation();
+          await mutateAsync(document.id);
+        }}
+      >
+        Delete
+      </AlertDialogAction>
+    </AlertDialogFooter>
+  );
+
+  const content = (
+    <AlertDialogContent
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+    >
+      {header}
+      {footer}
+    </AlertDialogContent>
+  );
+
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
+      {content}
+    </AlertDialog>
+  );
+};
+
+export default RemoveDocumentDialog;

@@ -1,0 +1,37 @@
+{
+  "name": "@online-document/prisma",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^7.3.0",
+    "prisma": "^7.3.0",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.10",
+    "@types/pg": "^8.16.0"
+  },
+  "exports": {
+    ".": {
+      "default": "./dist/src/index.js",
+      "types": "./dist/src/index.d.ts"
+    },
+    "./client": {
+      "default": "./dist/src/generated/prisma/client.js",
+      "types": "./dist/src/generated/prisma/src/client.d.ts"
+    },
+    "./browser": {
+      "default": "./dist/src/generated/prisma/src/browser.js",
+      "types": "./dist/src/generated/prisma/src/browser.d.ts"
+    }
+  }
+}
