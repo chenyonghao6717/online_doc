@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Carousel,
   CarouselContent,
@@ -13,12 +11,14 @@ import { createDocument } from "@/lib/document-apis";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useNavigate } from "react-router";
+import { useOrganization } from "@/components/organization/use-organization";
 
 export const TemplatesGallery = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { activeOrg } = useOrganization();
 
-  const { isPending, mutateAsync } = useMutation({
+  const { isPending, mutateAsync: createDocument_ } = useMutation({
     mutationFn: createDocument,
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -31,10 +31,11 @@ export const TemplatesGallery = () => {
     },
   });
 
-  const onTemplateClick = async (title: string, initContent: string) => {
-    const res = await mutateAsync({
+  const onTemplateClick = async (title: string, initialContent: string) => {
+    const res = await createDocument_({
       title: title,
-      initContent: initContent,
+      initialContent: initialContent,
+      organizationId: activeOrg?.id,
     });
     navigate(`/documents/${res.id}`);
   };

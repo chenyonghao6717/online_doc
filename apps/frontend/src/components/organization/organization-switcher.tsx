@@ -10,16 +10,12 @@ import { Separator } from "@/components/ui/separator";
 import { useState } from "react";
 import CreateOrganizationDialog from "./create-organization-dialog";
 import AddMembersDialog from "@/components/organization/add-members-dialog";
+import { useOrganization } from "./use-organization";
 
 const OrganizationSwitcher = () => {
   const [open, setOpen] = useState(false);
 
-  const { data: session } = authClient.useSession();
-  const { data: organizations } = authClient.useListOrganizations();
-
-  const activeOrganization = organizations?.find(
-    (org) => org.id === session?.session.activeOrganizationId
-  );
+  const { activeOrg, userOrganizations } = useOrganization();
 
   const activateOrganization = async (orgId: string | null) => {
     await authClient.organization.setActive({
@@ -32,7 +28,7 @@ const OrganizationSwitcher = () => {
     <PopoverTrigger asChild>
       <Button variant="ghost" className="max-w-[100px] md:max-w-[200px]">
         <span className="truncate">
-          {activeOrganization ? activeOrganization.name : "Personal Account"}
+          {activeOrg ? activeOrg.name : "Personal Account"}
         </span>
         {!open && <ChevronDown />}
         {open && <ChevronUp />}
@@ -44,16 +40,16 @@ const OrganizationSwitcher = () => {
     <div className="flex flex-col">
       <Button variant="ghost" onClick={() => activateOrganization(null)}>
         Personal Account
-        {!activeOrganization && <Check />}
+        {!activeOrg && <Check />}
       </Button>
-      {organizations?.map((org) => (
+      {userOrganizations?.map((org) => (
         <Button
           variant="ghost"
           key={org.id}
           onClick={() => activateOrganization(org.id)}
         >
           {org.name}
-          {activeOrganization?.id === org.id && <Check />}
+          {activeOrg?.id === org.id && <Check />}
         </Button>
       ))}
     </div>
@@ -65,9 +61,7 @@ const OrganizationSwitcher = () => {
         {organizationButtons}
         <Separator />
         <CreateOrganizationDialog />
-        {activeOrganization && (
-          <AddMembersDialog organizationId={activeOrganization.id} />
-        )}
+        {activeOrg && <AddMembersDialog organizationId={activeOrg.id} />}
       </div>
     </PopoverContent>
   );

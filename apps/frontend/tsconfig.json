@@ -10,13 +10,13 @@
       "@/*": ["src/*"]
     },
     "rootDir": "src",
-    "outDir": "dist",
+    "outDir": "./dist",
     "declaration": true,
     "target": "esnext",
     "module": "esnext",
     "strict": true,
     "types": ["node"],
-    "noEmit": false,
+    "noEmit": true,
     "composite": true
   },
   "include": ["src/**/*"]

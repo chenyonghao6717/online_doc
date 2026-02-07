@@ -7,5 +7,5 @@ export async function apiFetch(path: string, options?: RequestInit) {
     credentials: "include",
   });
   if (!res.ok) throw new Error(`Request failed: ${res.status}`);
-  return res.json();
+  return res;
 }

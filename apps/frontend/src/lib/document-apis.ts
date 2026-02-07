@@ -1,17 +1,18 @@
-import { type SearchDocumentsResponse } from "@online-document/contracts/document";
+import {
+  type SearchDocumentsResponse,
+  type SearchDocumentsSchema,
+  type CreateDocumentSchema,
+} from "@online-document/contracts/document";
 import queryString from "query-string";
 import { apiFetch } from "@/lib/api";
 
-export const createDocument = async (body: {
-  title?: string;
-  initContent?: string;
-}) => {
+export const createDocument = async (request: CreateDocumentSchema) => {
   const res = await apiFetch("/api/documents", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(body),
+    body: JSON.stringify(request),
   });
 
   if (!res.ok) {
@@ -21,12 +22,7 @@ export const createDocument = async (body: {
   return (await res.json()) as { id: string };
 };
 
-export const searchDocuments = async (queries: {
-  search?: string;
-  page?: number;
-  limit?: number;
-  organizationId?: string | null;
-}) => {
+export const searchDocuments = async (queries: SearchDocumentsSchema) => {
   const url = queryString.stringifyUrl({
     url: "/api/documents",
     query: queries,
@@ -38,7 +34,7 @@ export const searchDocuments = async (queries: {
     },
   });
 
-  return res as SearchDocumentsResponse;
+  return (await res.json()) as SearchDocumentsResponse;
 };
 
 export const deleteDocument = async (id: string) => {

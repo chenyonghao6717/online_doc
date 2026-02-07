@@ -1,5 +1,3 @@
-"use client";
-
 import { NavLink } from "react-router";
 import { SearchInput } from "./search-input";
 import { Button } from "@/components/ui/button";

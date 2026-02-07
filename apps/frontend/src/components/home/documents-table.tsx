@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Table,
   TableBody,
@@ -26,9 +24,8 @@ const DocumentsTable = ({ search }: { search: string }) => {
         limit: 10,
         page: pageParam,
         search,
-        organizationId: session?.session.activeOrganizationId,
+        organizationId: session?.session.activeOrganizationId ?? undefined,
       });
-      console.log("API result:", res);
       return res;
     },
     getNextPageParam: (lastPage) => {

@@ -1,5 +1,3 @@
-"use client";
-
 import { useSearchParam } from "@/hooks/use-search-param";
 import DocumentsTable from "@/components/home/documents-table";
 import { Navbar } from "./navbar";

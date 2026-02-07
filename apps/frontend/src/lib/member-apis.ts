@@ -1,4 +1,5 @@
-import { commaSeparatedEmailsSchema } from "@online-document/contracts/member";
+import { commaSeparatedEmailsSchema } from "@online-document/contracts/organization";
+import { apiFetch } from "./api";
 
 export const addMembers = async (
   commaSeparatedEmails: string,
@@ -10,7 +11,7 @@ export const addMembers = async (
     throw new Error("One or more emails are invalid");
   }
 
-  const res = await fetch(`/api/organizations/${organizationId}/members`, {
+  await apiFetch(`/api/organizations/${organizationId}/members`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -20,7 +21,4 @@ export const addMembers = async (
       role: "member",
     }),
   });
-  if (!res.ok) {
-    throw new Error("Failed to add members");
-  }
 };

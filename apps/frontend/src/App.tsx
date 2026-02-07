@@ -4,6 +4,7 @@ import AuthLayout from "@/components/auth/auth-layout";
 import SignInPage from "@/components/auth/sign-in-page";
 import SignUpPage from "@/components/auth/sign-up-page";
 import Home from "@/components/home/home";
+import DocumentPage from "@/components/documents/document";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
             <Route path="/sign-up" element={<SignUpPage />} />
           </Route>
           <Route path="/" element={<Home />} />
+          <Route path="/documents/:documentId" element={<DocumentPage />} />
         </Routes>
       </Providers>
     </BrowserRouter>
