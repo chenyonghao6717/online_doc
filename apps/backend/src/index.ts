@@ -2,7 +2,8 @@ import "module-alias/register";
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import authApp, { Session } from "@/lib/auth";
-import documentApp from "@/controllers/document-controller";
+import documentApp from "@/apps/document.app";
+import organizationApp from "@/apps/organization.app";
 import { HTTPException } from "hono/http-exception";
 import { cors } from "hono/cors";
 
@@ -38,6 +39,7 @@ app.use(
 
 app.route("/api/auth", authApp);
 app.route("/api/documents", documentApp);
+app.route("/api/organizations", organizationApp);
 
 serve(
   {

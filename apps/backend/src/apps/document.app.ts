@@ -5,7 +5,7 @@ import {
   getDocument,
   createDocument,
   searchDocuments,
-} from "@/services/document-service";
+} from "@/services/document.service";
 import { Session } from "@/lib/auth";
 import { useAuth } from "@/middleware/auth";
 import {

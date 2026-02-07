@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/db";
-import { Session } from "@/lib/auth";
+import { type Session } from "@/lib/auth";
 import { HTTPException } from "hono/http-exception";
 import {
   type CreateDocumentSchema,
@@ -24,14 +24,15 @@ export const getDocument = async (id: string, session: Session) => {
 };
 
 export const createDocument = async (
-  payload: CreateDocumentSchema,
+  request: CreateDocumentSchema,
   session: Session,
 ) => {
   const document = await prisma.document.create({
     data: {
-      ...payload,
-      title: payload.title ?? "Untitled document",
+      ...request,
+      title: request.title ?? "Untitled document",
       ownerId: session.user.id,
+      organizationId: request.organizationId,
     },
   });
   return document;

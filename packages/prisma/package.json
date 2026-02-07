@@ -30,8 +30,8 @@
       "types": "./dist/src/generated/prisma/src/client.d.ts"
     },
     "./browser": {
-      "default": "./dist/src/generated/prisma/src/browser.js",
-      "types": "./dist/src/generated/prisma/src/browser.d.ts"
+      "default": "./dist/src/generated/prisma/browser.js",
+      "types": "./dist/src/generated/prisma/browser.d.ts"
     }
   }
 }

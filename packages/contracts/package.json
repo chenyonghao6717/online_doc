@@ -17,20 +17,24 @@
   "type": "module",
   "exports": {
     ".": {
-      "default": "./dist/src/index.js",
-      "types": "./dist/src/index.d.ts"
+      "default": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     },
     "./auth": {
-      "default": "./dist/src/auth.js",
-      "types": "./dist/src/auth.d.ts"
+      "default": "./dist/auth.js",
+      "types": "./dist/auth.d.ts"
     },
     "./document": {
-      "default": "./dist/src/document.js",
-      "types": "./dist/src/document.d.ts"
+      "default": "./dist/document.js",
+      "types": "./dist/document.d.ts"
     },
     "./member": {
-      "default": "./dist/src/member.js",
-      "types": "./dist/src/member.d.ts"
+      "default": "./dist/member.js",
+      "types": "./dist/member.d.ts"
+    },
+    "./organization": {
+      "default": "./dist/organization.js",
+      "types": "./dist/organization.d.js"
     }
   }
 }

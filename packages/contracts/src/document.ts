@@ -3,7 +3,8 @@ import { Document } from "@online-document/prisma/browser";
 
 export const createDocumentSchema = z.object({
   title: z.optional(z.string()),
-  initContent: z.optional(z.string()),
+  initialContent: z.optional(z.string()),
+  organizationId: z.optional(z.string().min(1)),
 });
 
 export type CreateDocumentSchema = z.infer<typeof createDocumentSchema>;
