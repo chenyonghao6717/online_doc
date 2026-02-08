@@ -6,8 +6,23 @@ import {
   type SearchDocumentsSchema,
   type SearchDocumentsResponse,
 } from "@online-document/contracts/document";
+import { auth } from "@/lib/auth";
 
-export const getDocument = async (id: string, session: Session) => {
+const belongSameOrg = async (
+  orgId: string | null,
+  headers: Record<string, string>,
+) => {
+  const userOrgs = await auth.api.listOrganizations({
+    headers,
+  });
+  return userOrgs.some((org) => org.id === orgId);
+};
+
+export const getDocument = async (
+  id: string,
+  session: Session,
+  headers: Record<string, string>,
+) => {
   const userId = session.user.id;
 
   const document = await prisma.document.findFirst({
@@ -16,8 +31,14 @@ export const getDocument = async (id: string, session: Session) => {
     },
   });
 
+  if (!document) {
+    throw new HTTPException(404);
+  }
+
   if (document?.ownerId !== userId) {
-    throw new HTTPException(403);
+    if (!(await belongSameOrg(document.organizationId, headers))) {
+      throw new HTTPException(403);
+    }
   }
 
   return document;
@@ -41,31 +62,47 @@ export const createDocument = async (
 export const searchDocuments = async (
   queries: SearchDocumentsSchema,
   session: Session,
+  headers: Record<string, string>,
 ): Promise<SearchDocumentsResponse> => {
+  const userOrgIds = (
+    await auth.api.listOrganizations({
+      headers,
+    })
+  ).map((org) => org.id);
+
+  // The current user must be in the org
+  const verifiedOrgId =
+    queries.organizationId && userOrgIds.includes(queries.organizationId)
+      ? queries.organizationId
+      : undefined;
+
   const [total, documents] = await Promise.all([
     prisma.document.count({
       where: {
-        ownerId: session.user.id,
         title: {
           contains: queries.search || undefined,
           mode: "insensitive",
         },
-        organizationId: queries.organizationId || undefined,
+        ...(verifiedOrgId
+          ? { organizationId: verifiedOrgId }
+          : { ownerId: session.user.id }),
       },
     }),
     prisma.document.findMany({
       where: {
-        ownerId: session.user.id,
         title: {
           contains: queries.search || undefined,
           mode: "insensitive",
         },
-        organizationId: queries.organizationId || undefined,
+        ...(verifiedOrgId
+          ? { organizationId: verifiedOrgId }
+          : { ownerId: session.user.id }),
       },
       skip: queries.limit * (queries.page - 1),
       take: queries.limit,
     }),
   ]);
+
   return {
     documents,
     total,
@@ -75,7 +112,20 @@ export const searchDocuments = async (
 };
 
 export const deleteDocument = async (id: string, session: Session) => {
-  const document = await getDocument(id, session);
+  const document = await prisma.document.findFirst({
+    where: {
+      id,
+    },
+  });
+
+  if (!document) {
+    throw new HTTPException(404);
+  }
+
+  if (document.ownerId !== session.user.id) {
+    throw new HTTPException(403);
+  }
+
   await prisma.document.delete({
     where: {
       id: document.id,

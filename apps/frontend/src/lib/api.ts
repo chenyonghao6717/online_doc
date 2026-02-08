@@ -6,6 +6,22 @@ export async function apiFetch(path: string, options?: RequestInit) {
     ...options,
     credentials: "include",
   });
-  if (!res.ok) throw new Error(`Request failed: ${res.status}`);
+  if (!res.ok) {
+    let message = "";
+    switch (res.status) {
+      case 400:
+        message = "Bad request.";
+        break;
+      case 403:
+        message = "You are not authorized.";
+        break;
+      case 404:
+        message = "Not found.";
+        break;
+      default:
+        message = "Some errors occurred, please try later.";
+    }
+    throw new Error(message);
+  }
   return res;
 }

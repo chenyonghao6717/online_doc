@@ -39,16 +39,12 @@ export const searchDocuments = async (queries: SearchDocumentsSchema) => {
 
 export const deleteDocument = async (id: string) => {
   const url = `/api/documents/${id}`;
-  const res = await apiFetch(url, {
+  await apiFetch(url, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
   });
-
-  if (!res.ok) {
-    throw new Error("Failed to delete document");
-  }
 };
 
 export const updateDocumentTitle = async ({

@@ -33,7 +33,7 @@ app.get(
   async (c) => {
     const { id } = c.req.valid("param");
     const session = c.get("session");
-    const document = await getDocument(id, session);
+    const document = await getDocument(id, session, c.req.header());
     return c.json(document);
   },
 );
@@ -69,7 +69,7 @@ app.post("/", zValidator("json", createDocumentSchema), async (c) => {
 app.get("/", zValidator("query", searchDocumentsSchema), async (c) => {
   const queries = c.req.valid("query");
   const session = c.get("session");
-  return c.json(await searchDocuments(queries, session));
+  return c.json(await searchDocuments(queries, session, c.req.header()));
 });
 
 export default app;
