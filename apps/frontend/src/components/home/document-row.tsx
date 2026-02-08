@@ -20,6 +20,7 @@ import {
 import RemoveDocumentDialog from "@/components/home/remove-document-dialog";
 import RenameDocumentDialog from "@/components/home/rename-document-dialog";
 import { useNavigate } from "react-router";
+import { authClient } from "@/lib/auth-client";
 
 interface DocumentMenuProps {
   document: Document;
@@ -27,34 +28,41 @@ interface DocumentMenuProps {
 }
 
 const DocumentMenu = ({ document, onNewTab }: DocumentMenuProps) => {
+  const { data: session } = authClient.useSession();
+  const isOwner = session?.user.id === document.ownerId;
+
   const content = (
     <DropdownMenuContent>
-      <RenameDocumentDialog document={document}>
-        <DropdownMenuItem
-          onSelect={(e) => {
-            e.preventDefault();
-          }}
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-        >
-          <FilePenIcon className="size-4 mr-2" />
-          Rename
-        </DropdownMenuItem>
-      </RenameDocumentDialog>
-      <RemoveDocumentDialog document={document}>
-        <DropdownMenuItem
-          onSelect={(e) => {
-            e.preventDefault();
-          }}
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-        >
-          <TrashIcon className="size-4 mr-2" />
-          Remove
-        </DropdownMenuItem>
-      </RemoveDocumentDialog>
+      {isOwner && (
+        <RenameDocumentDialog document={document}>
+          <DropdownMenuItem
+            onSelect={(e) => {
+              e.preventDefault();
+            }}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            <FilePenIcon className="size-4 mr-2" />
+            Rename
+          </DropdownMenuItem>
+        </RenameDocumentDialog>
+      )}
+      {isOwner && (
+        <RemoveDocumentDialog document={document}>
+          <DropdownMenuItem
+            onSelect={(e) => {
+              e.preventDefault();
+            }}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
+            <TrashIcon className="size-4 mr-2" />
+            Remove
+          </DropdownMenuItem>
+        </RemoveDocumentDialog>
+      )}
       <DropdownMenuItem onClick={() => onNewTab(document.id)}>
         <ExternalLinkIcon className="size-4 mr-2" />
         Open in a new tab
