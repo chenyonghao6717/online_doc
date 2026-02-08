@@ -9,11 +9,12 @@
   },
   "scripts": {
     "build": "pnpm -r build",
-    "dev": "pnpm -r --parallel --filter ./apps/frontend --filter ./apps/backend dev"
+    "dev": "concurrently \"pnpm --filter backend dev\" \"pnpm --filter frontend dev\""
   },
   "dependencies": {
     "@online-document/contracts": "workspace:^",
     "@online-document/prisma": "link:packages/shared/prisma",
+    "concurrently": "^9.2.1",
     "contracts": "link:packages/shared/contracts"
   }
 }

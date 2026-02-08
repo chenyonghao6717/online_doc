@@ -5,6 +5,7 @@ import {
   getDocument,
   createDocument,
   searchDocuments,
+  deleteDocument,
 } from "@/services/document.service";
 import { Session } from "@/lib/auth";
 import { useAuth } from "@/middleware/auth";
@@ -24,16 +25,32 @@ app.use(useAuth);
 app.get(
   "/:id",
   zValidator(
-    "query",
+    "param",
     z.object({
       id: z.string().min(1),
     }),
   ),
   async (c) => {
-    const { id } = c.req.valid("query");
+    const { id } = c.req.valid("param");
     const session = c.get("session");
     const document = await getDocument(id, session);
     return c.json(document);
+  },
+);
+
+app.delete(
+  "/:id",
+  zValidator(
+    "param",
+    z.object({
+      id: z.string().min(1),
+    }),
+  ),
+  async (c) => {
+    const { id } = c.req.valid("param");
+    const session = c.get("session");
+    await deleteDocument(id, session);
+    return c.body(null, 204);
   },
 );
 

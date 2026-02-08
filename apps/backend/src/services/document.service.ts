@@ -17,7 +17,7 @@ export const getDocument = async (id: string, session: Session) => {
   });
 
   if (document?.ownerId !== userId) {
-    throw new HTTPException(400);
+    throw new HTTPException(403);
   }
 
   return document;
@@ -72,4 +72,13 @@ export const searchDocuments = async (
     page: queries.page,
     limit: queries.limit,
   };
+};
+
+export const deleteDocument = async (id: string, session: Session) => {
+  const document = await getDocument(id, session);
+  await prisma.document.delete({
+    where: {
+      id: document.id,
+    },
+  });
 };
