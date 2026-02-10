@@ -5,8 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider            = "prisma-client"
-  output              = "../src/generated/prisma"
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
 
   // prisma generated files uses js as imports which introduces errors so remove suffixes
   importFileExtension = ""
@@ -20,6 +20,7 @@ model Document {
   id             String   @id @default(uuid())
   title          String
   initialContent String?
+  content        Bytes?
   ownerId        String
   roomId         String?
   organizationId String?

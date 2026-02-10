@@ -28,6 +28,7 @@ export type DocumentMinAggregateOutputType = {
   id: string | null
   title: string | null
   initialContent: string | null
+  content: runtime.Bytes | null
   ownerId: string | null
   roomId: string | null
   organizationId: string | null
@@ -39,6 +40,7 @@ export type DocumentMaxAggregateOutputType = {
   id: string | null
   title: string | null
   initialContent: string | null
+  content: runtime.Bytes | null
   ownerId: string | null
   roomId: string | null
   organizationId: string | null
@@ -50,6 +52,7 @@ export type DocumentCountAggregateOutputType = {
   id: number
   title: number
   initialContent: number
+  content: number
   ownerId: number
   roomId: number
   organizationId: number
@@ -63,6 +66,7 @@ export type DocumentMinAggregateInputType = {
   id?: true
   title?: true
   initialContent?: true
+  content?: true
   ownerId?: true
   roomId?: true
   organizationId?: true
@@ -74,6 +78,7 @@ export type DocumentMaxAggregateInputType = {
   id?: true
   title?: true
   initialContent?: true
+  content?: true
   ownerId?: true
   roomId?: true
   organizationId?: true
@@ -85,6 +90,7 @@ export type DocumentCountAggregateInputType = {
   id?: true
   title?: true
   initialContent?: true
+  content?: true
   ownerId?: true
   roomId?: true
   organizationId?: true
@@ -169,6 +175,7 @@ export type DocumentGroupByOutputType = {
   id: string
   title: string
   initialContent: string | null
+  content: runtime.Bytes | null
   ownerId: string
   roomId: string | null
   organizationId: string | null
@@ -201,6 +208,7 @@ export type DocumentWhereInput = {
   id?: Prisma.StringFilter<"Document"> | string
   title?: Prisma.StringFilter<"Document"> | string
   initialContent?: Prisma.StringNullableFilter<"Document"> | string | null
+  content?: Prisma.BytesNullableFilter<"Document"> | runtime.Bytes | null
   ownerId?: Prisma.StringFilter<"Document"> | string
   roomId?: Prisma.StringNullableFilter<"Document"> | string | null
   organizationId?: Prisma.StringNullableFilter<"Document"> | string | null
@@ -212,6 +220,7 @@ export type DocumentOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   initialContent?: Prisma.SortOrderInput | Prisma.SortOrder
+  content?: Prisma.SortOrderInput | Prisma.SortOrder
   ownerId?: Prisma.SortOrder
   roomId?: Prisma.SortOrderInput | Prisma.SortOrder
   organizationId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -226,6 +235,7 @@ export type DocumentWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.DocumentWhereInput | Prisma.DocumentWhereInput[]
   title?: Prisma.StringFilter<"Document"> | string
   initialContent?: Prisma.StringNullableFilter<"Document"> | string | null
+  content?: Prisma.BytesNullableFilter<"Document"> | runtime.Bytes | null
   ownerId?: Prisma.StringFilter<"Document"> | string
   roomId?: Prisma.StringNullableFilter<"Document"> | string | null
   organizationId?: Prisma.StringNullableFilter<"Document"> | string | null
@@ -237,6 +247,7 @@ export type DocumentOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   initialContent?: Prisma.SortOrderInput | Prisma.SortOrder
+  content?: Prisma.SortOrderInput | Prisma.SortOrder
   ownerId?: Prisma.SortOrder
   roomId?: Prisma.SortOrderInput | Prisma.SortOrder
   organizationId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -254,6 +265,7 @@ export type DocumentScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Document"> | string
   title?: Prisma.StringWithAggregatesFilter<"Document"> | string
   initialContent?: Prisma.StringNullableWithAggregatesFilter<"Document"> | string | null
+  content?: Prisma.BytesNullableWithAggregatesFilter<"Document"> | runtime.Bytes | null
   ownerId?: Prisma.StringWithAggregatesFilter<"Document"> | string
   roomId?: Prisma.StringNullableWithAggregatesFilter<"Document"> | string | null
   organizationId?: Prisma.StringNullableWithAggregatesFilter<"Document"> | string | null
@@ -265,6 +277,7 @@ export type DocumentCreateInput = {
   id?: string
   title: string
   initialContent?: string | null
+  content?: runtime.Bytes | null
   ownerId: string
   roomId?: string | null
   organizationId?: string | null
@@ -276,6 +289,7 @@ export type DocumentUncheckedCreateInput = {
   id?: string
   title: string
   initialContent?: string | null
+  content?: runtime.Bytes | null
   ownerId: string
   roomId?: string | null
   organizationId?: string | null
@@ -287,6 +301,7 @@ export type DocumentUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   initialContent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  content?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string
   roomId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -298,6 +313,7 @@ export type DocumentUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   initialContent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  content?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string
   roomId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -309,6 +325,7 @@ export type DocumentCreateManyInput = {
   id?: string
   title: string
   initialContent?: string | null
+  content?: runtime.Bytes | null
   ownerId: string
   roomId?: string | null
   organizationId?: string | null
@@ -320,6 +337,7 @@ export type DocumentUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   initialContent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  content?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string
   roomId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -331,6 +349,7 @@ export type DocumentUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   initialContent?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  content?: Prisma.NullableBytesFieldUpdateOperationsInput | runtime.Bytes | null
   ownerId?: Prisma.StringFieldUpdateOperationsInput | string
   roomId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizationId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -342,6 +361,7 @@ export type DocumentCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   initialContent?: Prisma.SortOrder
+  content?: Prisma.SortOrder
   ownerId?: Prisma.SortOrder
   roomId?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
@@ -353,6 +373,7 @@ export type DocumentMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   initialContent?: Prisma.SortOrder
+  content?: Prisma.SortOrder
   ownerId?: Prisma.SortOrder
   roomId?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
@@ -364,6 +385,7 @@ export type DocumentMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
   initialContent?: Prisma.SortOrder
+  content?: Prisma.SortOrder
   ownerId?: Prisma.SortOrder
   roomId?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
@@ -379,6 +401,10 @@ export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
 }
 
+export type NullableBytesFieldUpdateOperationsInput = {
+  set?: runtime.Bytes | null
+}
+
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
@@ -389,6 +415,7 @@ export type DocumentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   id?: boolean
   title?: boolean
   initialContent?: boolean
+  content?: boolean
   ownerId?: boolean
   roomId?: boolean
   organizationId?: boolean
@@ -400,6 +427,7 @@ export type DocumentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   id?: boolean
   title?: boolean
   initialContent?: boolean
+  content?: boolean
   ownerId?: boolean
   roomId?: boolean
   organizationId?: boolean
@@ -411,6 +439,7 @@ export type DocumentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   id?: boolean
   title?: boolean
   initialContent?: boolean
+  content?: boolean
   ownerId?: boolean
   roomId?: boolean
   organizationId?: boolean
@@ -422,6 +451,7 @@ export type DocumentSelectScalar = {
   id?: boolean
   title?: boolean
   initialContent?: boolean
+  content?: boolean
   ownerId?: boolean
   roomId?: boolean
   organizationId?: boolean
@@ -429,7 +459,7 @@ export type DocumentSelectScalar = {
   updatedAt?: boolean
 }
 
-export type DocumentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "initialContent" | "ownerId" | "roomId" | "organizationId" | "createdAt" | "updatedAt", ExtArgs["result"]["document"]>
+export type DocumentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "initialContent" | "content" | "ownerId" | "roomId" | "organizationId" | "createdAt" | "updatedAt", ExtArgs["result"]["document"]>
 
 export type $DocumentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Document"
@@ -438,6 +468,7 @@ export type $DocumentPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     id: string
     title: string
     initialContent: string | null
+    content: runtime.Bytes | null
     ownerId: string
     roomId: string | null
     organizationId: string | null
@@ -869,6 +900,7 @@ export interface DocumentFieldRefs {
   readonly id: Prisma.FieldRef<"Document", 'String'>
   readonly title: Prisma.FieldRef<"Document", 'String'>
   readonly initialContent: Prisma.FieldRef<"Document", 'String'>
+  readonly content: Prisma.FieldRef<"Document", 'Bytes'>
   readonly ownerId: Prisma.FieldRef<"Document", 'String'>
   readonly roomId: Prisma.FieldRef<"Document", 'String'>
   readonly organizationId: Prisma.FieldRef<"Document", 'String'>

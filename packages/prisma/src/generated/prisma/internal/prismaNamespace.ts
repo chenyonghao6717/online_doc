@@ -1046,6 +1046,7 @@ export const DocumentScalarFieldEnum = {
   id: 'id',
   title: 'title',
   initialContent: 'initialContent',
+  content: 'content',
   ownerId: 'ownerId',
   roomId: 'roomId',
   organizationId: 'organizationId',
@@ -1198,6 +1199,20 @@ export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 
  * Reference to a field of type 'String[]'
  */
 export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Bytes'
+ */
+export type BytesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Bytes'>
+    
+
+
+/**
+ * Reference to a field of type 'Bytes[]'
+ */
+export type ListBytesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Bytes[]'>
     
 
 

@@ -25,7 +25,7 @@ export const getDocument = async (
 ) => {
   const userId = session.user.id;
 
-  const document = await prisma.document.findFirst({
+  const document = await prisma.document.findUniqueOrThrow({
     where: {
       id,
     },

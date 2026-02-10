@@ -6,6 +6,7 @@ import documentApp from "@/apps/document.app";
 import organizationApp from "@/apps/organization.app";
 import { HTTPException } from "hono/http-exception";
 import { cors } from "hono/cors";
+import { Prisma } from "@online-document/prisma/client";
 
 type Variables = {
   session: Session;
@@ -17,7 +18,12 @@ app.onError((err, c) => {
   if (err instanceof HTTPException) {
     return err.getResponse();
   }
-  console.log(err);
+  if (err instanceof Prisma.PrismaClientKnownRequestError) {
+    // record not found
+    if (err.code === "P2025") {
+      return c.body(null, 404);
+    }
+  }
   return c.json(
     {
       error: "Internal Server Error",

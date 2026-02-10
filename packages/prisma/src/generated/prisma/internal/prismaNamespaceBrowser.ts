@@ -81,6 +81,7 @@ export const DocumentScalarFieldEnum = {
   id: 'id',
   title: 'title',
   initialContent: 'initialContent',
+  content: 'content',
   ownerId: 'ownerId',
   roomId: 'roomId',
   organizationId: 'organizationId',
