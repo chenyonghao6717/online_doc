@@ -1,14 +1,14 @@
 import FontFamily from "@tiptap/extension-font-family";
 import ImageResize from "tiptap-extension-resize-image";
 import Link from "@tiptap/extension-link";
-import Table from "@tiptap/extension-table";
+import { Table } from "@tiptap/extension-table";
 import TableCell from "@tiptap/extension-table-cell";
 import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
 import TaskItem from "@tiptap/extension-task-item";
 import TaskList from "@tiptap/extension-task-list";
 import TextAlign from "@tiptap/extension-text-align";
-import TextStyle from "@tiptap/extension-text-style";
+import { TextStyle } from "@tiptap/extension-text-style";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
 import { Color } from "@tiptap/extension-color";
@@ -27,8 +27,35 @@ import {
   docPaperHeight,
   docPaperWidth,
 } from "@/components/documents/constants";
+import * as Y from "yjs";
+import { HocuspocusProvider } from "@hocuspocus/provider";
+import { useParams } from "react-router";
+import Collaboration from "@tiptap/extension-collaboration";
+import CollaborationCaret from "@tiptap/extension-collaboration-caret";
+import { authClient } from "@/lib/auth-client";
+import { useEffect, useState } from "react";
+
+const WS_URL: string = import.meta.env.VITE_WEB_SOCKET_URL;
+const ydoc = new Y.Doc();
 
 export const Editor = () => {
+  const { documentId } = useParams<{ documentId: string }>();
+  const { data: session } = authClient.useSession();
+  const [provider, setProvider] = useState<HocuspocusProvider>();
+
+  useEffect(() => {
+    if (!session || provider) {
+      return;
+    }
+
+    const provider_ = new HocuspocusProvider({
+      url: WS_URL,
+      name: documentId!,
+      document: ydoc,
+    });
+    setProvider(provider_);
+  }, []);
+
   const { setEditor } = useEditorStore();
   const updateEditor = ({ editor }: { editor: TiptapEditor | null }) =>
     setEditor(editor);
@@ -64,7 +91,6 @@ export const Editor = () => {
         autolink: true,
         defaultProtocol: "https",
       }),
-      StarterKit,
       Table,
       TableCell,
       TableHeader,
@@ -76,8 +102,24 @@ export const Editor = () => {
       }),
       TextStyle,
       Underline,
+      StarterKit.configure({
+        undoRedo: false,
+      }),
+      Collaboration.configure({
+        document: ydoc,
+      }),
     ],
   });
+
+  if (session && provider) {
+    editor?.extensionManager.extensions.push(
+      CollaborationCaret.configure({
+        provider,
+        user: { name: session?.user.id, color: "#ffcc00" },
+      }),
+    );
+  }
+
   return (
     <div className="size-full overflow-x-auto bg-[#F9FBFD] px-4 print:p-0 print:bg-white print:overflow-visible">
       <Ruler />
