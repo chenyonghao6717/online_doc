@@ -115,7 +115,7 @@ const SignUpCard = () => {
               placeholder="Enter password"
             />
             <Button size="lg" className="w-full ">
-              Login
+              Sign up
             </Button>
           </form>
         </Form>
