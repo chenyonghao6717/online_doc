@@ -1,4 +1,3 @@
-import "module-alias/register";
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import authApp, { Session } from "@/lib/auth";
@@ -7,7 +6,7 @@ import organizationApp from "@/apps/organization.app";
 import { HTTPException } from "hono/http-exception";
 import { cors } from "hono/cors";
 import { Prisma } from "@online-document/prisma/client";
-import { Server } from "@hocuspocus/server";
+import { wsServer } from "@/apps/hocuspocus.app";
 
 type Variables = {
   session: Session;
@@ -58,13 +57,4 @@ serve(
   },
 );
 
-const server = new Server({
-  name: "hocuspocus-fra1-01",
-  port: 1234,
-  timeout: 30000,
-  debounce: 5000,
-  maxDebounce: 30000,
-  quiet: true,
-});
-
-server.listen();
+wsServer.listen();

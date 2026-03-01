@@ -6,17 +6,7 @@ import {
   type SearchDocumentsSchema,
   type SearchDocumentsResponse,
 } from "@online-document/contracts/document";
-import { auth } from "@/lib/auth";
-
-const belongSameOrg = async (
-  orgId: string | null,
-  headers: Record<string, string>,
-) => {
-  const userOrgs = await auth.api.listOrganizations({
-    headers,
-  });
-  return userOrgs.some((org) => org.id === orgId);
-};
+import { auth, belongSameOrg } from "@/lib/auth";
 
 export const getDocument = async (
   id: string,
